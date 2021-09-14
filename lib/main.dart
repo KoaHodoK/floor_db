@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       home: FutureBuilder<NoteDatabase>(
         future: $FloorNoteDatabase.databaseBuilder('note.db').build(),
         builder: (context, data) {

@@ -1,5 +1,6 @@
 import 'package:floor_db/database/note_table.dart';
 import 'package:floor_db/database/notedao.dart';
+import 'package:floor_db/screens/add_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,8 +23,9 @@ class _HomeState extends State<Home> {
         mainAxisSize: MainAxisSize.min,
         children: [
           FloatingActionButton(
-            onPressed: () async {
-              await widget.noteDao.addNote(Note('Title', 'message'));
+            heroTag: "Add",
+            onPressed: () {
+              Get.to(AddScreen());
             },
             child: Icon(Icons.add),
           ),
@@ -31,6 +33,7 @@ class _HomeState extends State<Home> {
             width: 5,
           ),
           FloatingActionButton(
+            heroTag: "Remove",
             backgroundColor: Colors.red,
             onPressed: () {},
             child: Icon(Icons.remove),
