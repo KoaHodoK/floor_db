@@ -1,6 +1,7 @@
 import 'package:floor_db/database/note_table.dart';
 import 'package:floor_db/database/notedao.dart';
 import 'package:floor_db/screens/add_screen.dart';
+import 'package:floor_db/screens/update_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,26 +20,12 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(title: Text('Floor database')),
       body: noteList(),
-      floatingActionButton: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          FloatingActionButton(
-            heroTag: "Add",
-            onPressed: () {
-              Get.to(AddScreen());
-            },
-            child: Icon(Icons.add),
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          FloatingActionButton(
-            heroTag: "Remove",
-            backgroundColor: Colors.red,
-            onPressed: () {},
-            child: Icon(Icons.remove),
-          )
-        ],
+      floatingActionButton: FloatingActionButton(
+        heroTag: "Add",
+        onPressed: () {
+          Get.to(AddScreen());
+        },
+        child: Icon(Icons.add),
       ),
     );
   }
@@ -52,12 +39,14 @@ class _HomeState extends State<Home> {
             itemBuilder: (_, position) {
               return Card(
                 child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.blue,
-                    child: Text(
-                      '${position + 1}',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                  onTap: () {
+                    Get.to(UpdateScreen(), arguments: data.data![position]);
+                  },
+                  trailing: IconButton(
+                    onPressed: () {
+                      widget.noteDao.deleteNote(data.data![position]);
+                    },
+                    icon: Icon(Icons.delete, color: Colors.red),
                   ),
                   title: Text(data.data![position].title),
                   subtitle: Text(data.data![position].message),
