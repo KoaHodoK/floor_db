@@ -1,11 +1,12 @@
 import 'package:floor_db/database/note_table.dart';
 import 'package:floor_db/database/notedao.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Home extends StatefulWidget {
-  NoteDao noteDao;
+  final NoteDao noteDao = Get.find();
 
-  Home(this.noteDao);
+  Home();
 
   @override
   _HomeState createState() => _HomeState();
