@@ -9,35 +9,69 @@ class AddScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NoteDao noteDao = Get.find();
-    return Scaffold(
-      appBar: AppBar(title: Text('Add Screen')),
-      body: Container(
-        margin: EdgeInsets.all(13),
-        child: Column(
-          children: [
-            TextField(
-              controller: title,
-              decoration: InputDecoration(
-                  hintText: 'Title', border: OutlineInputBorder()),
+    return SafeArea(
+      child: Scaffold(
+          appBar: AppBar(
+              iconTheme: IconThemeData(color: Colors.black),
+              centerTitle: true,
+              title: Text(
+                'Add Note',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 23),
+              ),
+              backgroundColor: Colors.transparent,
+              elevation: 0.0),
+          body: Container(
+            margin: EdgeInsets.all(13),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                TextField(
+                  onSubmitted: (val) =>
+                      val.isEmpty ? "Title can\'t be empty" : val = title.text,
+                  autofocus: true,
+                  controller: title,
+                  decoration: InputDecoration(
+                      labelText: 'Title', border: OutlineInputBorder()),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  onSubmitted: (val) => val.isEmpty
+                      ? "Message can\'t be empty"
+                      : val = message.text,
+                  controller: message,
+                  decoration: InputDecoration(
+                      labelText: 'Message', border: OutlineInputBorder()),
+                ),
+                Spacer(),
+                TextButton(
+                    onPressed: () {
+                      noteDao.addNote(Note(title.text, message.text));
+                      Get.back();
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Save',
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                      ),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(10)),
+                    ))
+              ],
             ),
-            SizedBox(
-              height: 10,
-            ),
-            TextField(
-              controller: message,
-              decoration: InputDecoration(
-                  hintText: 'Message', border: OutlineInputBorder()),
-            ),
-            SizedBox(height: 10),
-            ElevatedButton(
-                onPressed: () {
-                  noteDao.addNote(Note(title.text, message.text));
-                  Get.back();
-                },
-                child: Text('Add Note'))
-          ],
-        ),
-      ),
+          )),
     );
   }
 }

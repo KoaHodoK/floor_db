@@ -13,15 +13,27 @@ class UpdateScreen extends StatelessWidget {
     title.text = note.title;
     message.text = note.message;
     return Scaffold(
-      appBar: AppBar(title: Text('Update Screen')),
+      appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
+          centerTitle: true,
+          title: Text(
+            'Update Note',
+            style: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 23),
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0.0),
       body: Container(
         margin: EdgeInsets.all(13),
         child: Column(
           children: [
+            SizedBox(
+              height: 20,
+            ),
             TextField(
               controller: title,
               decoration: InputDecoration(
-                  hintText: 'Title', border: OutlineInputBorder()),
+                  labelText: 'Title', border: OutlineInputBorder()),
             ),
             SizedBox(
               height: 10,
@@ -29,16 +41,29 @@ class UpdateScreen extends StatelessWidget {
             TextField(
               controller: message,
               decoration: InputDecoration(
-                  hintText: 'Message', border: OutlineInputBorder()),
+                  labelText: 'Message', border: OutlineInputBorder()),
             ),
-            SizedBox(height: 10),
-            ElevatedButton(
+            Spacer(),
+            TextButton(
                 onPressed: () {
                   noteDao
                       .updateNote(Note(title.text, message.text, id: note.id));
                   Get.back();
                 },
-                child: Text('Update Note'))
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Update',
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                  ),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(10)),
+                ))
           ],
         ),
       ),
